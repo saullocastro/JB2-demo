@@ -30,15 +30,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Setup Pages
         uses: actions/configure-pages@v3
+      
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
+      
       - name: Install MyST
         run: npm install -g mystmd
 
-        # to build the typst and latex pdf
+      # Setup tools for PDF generation
       - name: Setup Typst
         uses: typst-community/setup-typst@v4
 
@@ -53,6 +56,7 @@ jobs:
             fonts-lmodern \
             pandoc
 
+      # Build 1: Generate Presentations (Typst and Beamer PDFs)
       - name: Build Presentations with Make
         run: make all
 
@@ -62,32 +66,80 @@ jobs:
           name: Generated Presentations
           path: presentations/
 
-      - name: Build PDF
-        run: |
-          myst build --pdf --typst
+      # Build 2: Generate Report PDFs (MyST outputs)
+      - name: Build Report PDFs
+        run: myst build --pdf --typst
 
-      - name: Upload Output PDF as Artifact
+      - name: Upload Report PDF Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Output PDF
+          name: Report PDFs
           path: exports/*.pdf
           compression-level: 0
+        continue-on-error: true
 
-      # To build the HTML site
-      - name: Build HTML Assets
+      # Build 3: Generate HTML Website
+      - name: Build HTML Website
         run: myst build --html
 
-      - name: Copy PDFs to HTML directory
+      # Integrate all outputs into the website
+      - name: Prepare downloads directory
         run: |
           mkdir -p _build/html/downloads
-          cp ./exports/report_tex.pdf _build/html/downloads/
-          cp ./exports/report_typst.pdf _build/html/downloads/
-          cp ./presentations/combined_beamer_presentation.pdf _build/html/downloads/
+      
+      - name: Verify generated files
+        run: |
+          echo "=== Checking for generated files ==="
+          echo "Presentations directory:"
+          ls -lah presentations/ || echo "No presentations directory"
+          echo ""
+          echo "Exports directory:"
+          ls -lah exports/ || echo "No exports directory"
+          echo ""
+          echo "Build directory:"
+          ls -lah _build/html/ || echo "No build directory"
+          
+      - name: Copy Report PDFs to downloads
+        run: |
+          if [ -f ./exports/report_tex.pdf ]; then
+            cp ./exports/report_tex.pdf _build/html/downloads/
+            echo "✓ Copied report_tex.pdf"
+          else
+            echo "✗ report_tex.pdf not found"
+          fi
+          if [ -f ./exports/report_typst.pdf ]; then
+            cp ./exports/report_typst.pdf _build/html/downloads/
+            echo "✓ Copied report_typst.pdf"
+          else
+            echo "✗ report_typst.pdf not found"
+          fi
+      
+      - name: Copy Presentation PDFs to downloads
+        run: |
+          if [ -f ./presentations/combined_beamer_presentation.pdf ]; then
+            cp ./presentations/combined_beamer_presentation.pdf _build/html/downloads/
+            echo "✓ Copied combined_beamer_presentation.pdf"
+          else
+            echo "✗ combined_beamer_presentation.pdf not found"
+          fi
+          if [ -d ./presentations ]; then
+            mkdir -p _build/html/downloads/presentations
+            cp ./presentations/*_typst.pdf _build/html/downloads/presentations/ 2>/dev/null && \
+              echo "✓ Copied individual Typst PDFs" || \
+              echo "⚠ No individual Typst PDFs found"
+          fi
+      
+      - name: List final downloads directory
+        run: |
+          echo "=== Final downloads directory structure ==="
+          find _build/html/downloads -type f -ls 2>/dev/null || echo "Downloads directory is empty or not found"
 
+      # Deploy to GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './_build/html'
+      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
