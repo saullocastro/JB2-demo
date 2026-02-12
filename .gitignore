@@ -1,2 +1,11 @@
 # MyST build outputs
 _build
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.log
+*.fls
+*.aux
+*.nav
+*.fdb_latexmk
