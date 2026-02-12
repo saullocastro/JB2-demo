@@ -1,3 +1,4 @@
-.pdf-only {
+.pdf-only,
+.beamer-only {
   display: none;
 }

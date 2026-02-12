@@ -43,15 +43,15 @@ This text should appear in all formats.
 
 This is a text that should appear in all the website, PDF and beamer presentation.
 
-:::{raw} html
-<p>This is a block of text that should appear only on the website.</p>
+::: div .web-only
+This is a block of text that should appear only on the website.
 :::
 
-:::{raw} latex
+::: div .beamer-only
 This is a block of text that should appear only in the beamer presentation.
 :::
 
-:::{div} .pdf-only
+::: div .pdf-only
 This is a block of text that should appear only in the PDF.
 :::
 

@@ -19,12 +19,13 @@ extends:
   
 site:
   template: book-theme
+  static_path: [_static]
   options:
     favicon: figures/favicon.ico
     logo: figures/tudelft.png
     logo_dark: figures/tudelft-dark.png
     css:
-      - _static/custom.css
+      - custom.css
   actions:
     - title: PDF
       url: ./downloads/report_tex.pdf
