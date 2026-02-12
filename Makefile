@@ -89,7 +89,7 @@ $(BEAMER_PDF): $(BEAMER_FRAGMENTS) $(TEMPLATE_DIR)/presentation.tex
 $(BEAMER_BUILD_DIR)/%.tex: $(CONTENT_DIR)/%.md
 	@echo " PANDOC: $< -> $@"
 	@mkdir -p $(@D)
-	@$(PANDOC) $< -t beamer -o $@
+	@$(PANDOC) --lua-filter=pandoc-filter.lua $< -t beamer -o $@
 
 
 # ==============================================================================
@@ -106,7 +106,7 @@ $(OUTPUT_DIR)/%.typ: $(CONTENT_DIR)/%.md
 	@echo " PANDOC: $< -> $@"
 	@mkdir -p $(@D)
 	@cp reference.bib $(OUTPUT_DIR)/
-	@$(PANDOC) --lua-filter=remove-raw-latex.lua --bibliography=reference.bib $< -t typst -s -o $@
+	@$(PANDOC) --lua-filter=pandoc-filter.lua --bibliography=reference.bib $< -t typst -s -o $@
 
 
 # ==============================================================================

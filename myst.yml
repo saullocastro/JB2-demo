@@ -23,6 +23,8 @@ site:
     favicon: figures/favicon.ico
     logo: figures/tudelft.png
     logo_dark: figures/tudelft-dark.png
+    css:
+      - _static/custom.css
   actions:
     - title: PDF
       url: ./downloads/report_tex.pdf

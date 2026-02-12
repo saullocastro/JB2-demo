@@ -43,6 +43,18 @@ This text should appear in all formats.
 
 This is a text that should appear in all the website, PDF and beamer presentation.
 
+```{raw} html
+<p>This is a block of text that should appear only on the website.</p>
+```
+
+```{raw} latex
+This is a block of text that should appear only in the beamer presentation.
+```
+
+```{div} .pdf-only
+This is a block of text that should appear only in the PDF.
+```
+
 ![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/diagram.png)
 
 ```{raw} latex
