@@ -9,6 +9,9 @@ project:
   
   bibliography:
   - reference.bib
+
+  exclude:
+  - presentations/
   
 extends:
   - toc.yml     # includes table of contents

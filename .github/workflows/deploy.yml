@@ -75,7 +75,7 @@ jobs:
 
       # To build the HTML site
       - name: Build HTML Assets
-        run: myst build --html --only-toc
+        run: myst build --html
 
       - name: Copy PDFs to HTML directory
         run: |
