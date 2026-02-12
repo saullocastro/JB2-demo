@@ -8,7 +8,7 @@ project:
   date: 2026-01-31
   
   bibliography:
-  - references/references.bib
+  - reference.bib
   
 extends:
   - toc.yml     # includes table of contents
@@ -22,6 +22,8 @@ site:
     logo_dark: figures/tudelft-dark.png
   actions:
     - title: PDF
-      url: ./exports/report_tex.pdf
+      url: ./downloads/report_tex.pdf
     - title: Typst PDF
-      url: ./exports/report_typst.pdf
+      url: ./downloads/report_typst.pdf
+    - title: Beamer Presentation
+      url: ./downloads/combined_beamer_presentation.pdf

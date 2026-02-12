@@ -50,7 +50,17 @@ jobs:
             texlive-xetex \
             texlive-latex-extra \
             texlive-fonts-recommended \
-            fonts-lmodern
+            fonts-lmodern \
+            pandoc
+
+      - name: Build Presentations with Make
+        run: make all
+
+      - name: Upload Presentation Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Generated Presentations
+          path: presentations/
 
       - name: Build PDF
         run: |
@@ -65,7 +75,14 @@ jobs:
 
       # To build the HTML site
       - name: Build HTML Assets
-        run: myst build --html
+        run: myst build --html --only-toc
+
+      - name: Copy PDFs to HTML directory
+        run: |
+          mkdir -p _build/html/downloads
+          cp ./exports/report_tex.pdf _build/html/downloads/
+          cp ./exports/report_typst.pdf _build/html/downloads/
+          cp ./presentations/combined_beamer_presentation.pdf _build/html/downloads/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
