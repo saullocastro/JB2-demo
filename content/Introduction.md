@@ -7,7 +7,7 @@ abstract: |
 
 # Introduction
 
-Jupyter Book has been rebuild from ground up using the MyST engine [@doi:10.25080/hwcj9957]. This allows to export content in multiple output formats including HTML, PDF and docx. In this paper we present an overview of the possibilities and demonstrate its working.
+Jupyter Book has been rebuild from ground up using the MyST engine [@Jupyter2025]. This allows to export content in multiple output formats including HTML, PDF and docx. In this paper we present an overview of the possibilities and demonstrate its working.
 
 ## Background
 Some background information about Jupyter Book and its features, like exporting to multiple formats as indicated in {numref}`fig-diagram`.
@@ -28,3 +28,29 @@ Some figure
 A figure that is in the website but not in the PDF version.
 ```
 +++
+
+This text should appear in all formats.
+
+![This picture should appear in all formats](../figures/tudelft.png)
+
+```{raw} latex
+\begin{figure}
+\centering
+\only<1>{\includegraphics[width=0.5\textwidth]{/Users/saullogiovanip/repos/JB2-demo/figures/tudelft-dark.png}}
+\caption{This picture should appear only in beamer}
+\end{figure}
+```
+
+This is a text that should appear in all the website, PDF and beamer presentation.
+
+![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/diagram.png)
+
+```{raw} latex
+\begin{figure}
+\centering
+\only<1>{\includegraphics[width=0.5\textwidth]{/Users/saullogiovanip/repos/JB2-demo/figures/delft.png}}
+\caption{This is a picture that would appear only in the beamer presentation.}
+\end{figure}
+```
+
+![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/tudelft.png)
