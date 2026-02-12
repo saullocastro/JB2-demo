@@ -20,49 +20,49 @@ Some figure
 :::
 
 
-+++{"no-pdf":true}
+::::{raw} html
 :::{figure} ../figures/delft.*
 :label: fig-delft
 :alt: picture of the TUD
 
 A figure that is in the website but not in the PDF version.
 :::
-+++
+::::
 
 This text should appear in all formats.
 
 ![This picture should appear in all formats](../figures/tudelft.png)
 
-:::{raw} latex
+::::{raw} latex
 \begin{figure}
 \centering
 \only<1>{\includegraphics[width=0.5\textwidth]{figures/tudelft-dark.png}}
 \caption{This picture should appear only in beamer}
 \end{figure}
-:::
+::::
 
 This is a text that should appear in all the website, PDF and beamer presentation.
 
-::: div .web-only
+:::: {.web-only}
 This is a block of text that should appear only on the website.
-:::
+::::
 
-::: div .beamer-only
+:::: {.beamer-only}
 This is a block of text that should appear only in the beamer presentation.
-:::
+::::
 
-::: div .pdf-only
+:::: {.pdf-only}
 This is a block of text that should appear only in the PDF.
-:::
+::::
 
 ![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/diagram.png)
 
-:::{raw} latex
+::::{raw} latex
 \begin{figure}
 \centering
 \only<1>{\includegraphics[width=0.5\textwidth]{figures/delft.png}}
 \caption{This is a picture that would appear only in the beamer presentation.}
 \end{figure}
-:::
+::::
 
 ![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/tudelft.png)
