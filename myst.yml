@@ -3,9 +3,9 @@ project:
   title: TU Delft's JB Starterkit
   # description:
   keywords: [Jupyter Book, Open Science, TU Delft, Starterkit]
-  authors: [Freek Pols]
+  authors: [Saullo G. P. Castro]
   github: https://github.com/TUD-JB-OS/starterkit
-  date: 2026-01-31
+  date: 2026-02-12
   
   bibliography:
   - reference.bib
