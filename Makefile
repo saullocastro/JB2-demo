@@ -106,7 +106,7 @@ $(OUTPUT_DIR)/%.typ: $(CONTENT_DIR)/%.md
 	@echo " PANDOC: $< -> $@"
 	@mkdir -p $(@D)
 	@cp reference.bib $(OUTPUT_DIR)/
-	@$(PANDOC) --bibliography=reference.bib $< -t typst -s -o $@
+	@$(PANDOC) --lua-filter=remove-raw-latex.lua --bibliography=reference.bib $< -t typst -s -o $@
 
 
 # ==============================================================================

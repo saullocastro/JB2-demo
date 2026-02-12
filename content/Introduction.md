@@ -36,7 +36,7 @@ This text should appear in all formats.
 ```{raw} latex
 \begin{figure}
 \centering
-\only<1>{\includegraphics[width=0.5\textwidth]{/Users/saullogiovanip/repos/JB2-demo/figures/tudelft-dark.png}}
+\only<1>{\includegraphics[width=0.5\textwidth]{figures/tudelft-dark.png}}
 \caption{This picture should appear only in beamer}
 \end{figure}
 ```
@@ -48,7 +48,7 @@ This is a text that should appear in all the website, PDF and beamer presentatio
 ```{raw} latex
 \begin{figure}
 \centering
-\only<1>{\includegraphics[width=0.5\textwidth]{/Users/saullogiovanip/repos/JB2-demo/figures/delft.png}}
+\only<1>{\includegraphics[width=0.5\textwidth]{figures/delft.png}}
 \caption{This is a picture that would appear only in the beamer presentation.}
 \end{figure}
 ```
