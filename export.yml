@@ -12,6 +12,8 @@ project:
       template: https://github.com/TUD-JB-OS/typst_template.git
       output: exports/report_typst.pdf
       id: report_typst
+      pandoc_args:
+        - --lua-filter=pandoc-filter.lua
 
 
   downloads:
