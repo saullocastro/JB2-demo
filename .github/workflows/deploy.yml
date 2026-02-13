@@ -85,7 +85,7 @@ jobs:
       # Integrate all outputs into the website
       - name: Prepare downloads directory
         run: |
-          mkdir -p _build/site/downloads
+          mkdir -p _build/html/downloads
       
       - name: Verify generated files
         run: |
@@ -97,18 +97,18 @@ jobs:
           ls -lah exports/ || echo "No exports directory"
           echo ""
           echo "Build directory:"
-          ls -lah _build/site/ || echo "No build directory"
+          ls -lah _build/html/ || echo "No build directory"
           
       - name: Copy Report PDFs to downloads
         run: |
           if [ -f ./exports/report_tex.pdf ]; then
-            cp ./exports/report_tex.pdf _build/site/downloads/
+            cp ./exports/report_tex.pdf _build/html/downloads/
             echo "✓ Copied report_tex.pdf"
           else
             echo "✗ report_tex.pdf not found"
           fi
           if [ -f ./exports/report_typst.pdf ]; then
-            cp ./exports/report_typst.pdf _build/site/downloads/
+            cp ./exports/report_typst.pdf _build/html/downloads/
             echo "✓ Copied report_typst.pdf"
           else
             echo "✗ report_typst.pdf not found"
@@ -117,14 +117,14 @@ jobs:
       - name: Copy Presentation PDFs to downloads
         run: |
           if [ -f ./presentations/combined_beamer_presentation.pdf ]; then
-            cp ./presentations/combined_beamer_presentation.pdf _build/site/downloads/
+            cp ./presentations/combined_beamer_presentation.pdf _build/html/downloads/
             echo "✓ Copied combined_beamer_presentation.pdf"
           else
             echo "✗ combined_beamer_presentation.pdf not found"
           fi
           if [ -d ./presentations ]; then
-            mkdir -p _build/site/downloads/presentations
-            cp ./presentations/*_typst.pdf _build/site/downloads/presentations/ 2>/dev/null && \
+            mkdir -p _build/html/downloads/presentations
+            cp ./presentations/*_typst.pdf _build/html/downloads/presentations/ 2>/dev/null && \
               echo "✓ Copied individual Typst PDFs" || \
               echo "⚠ No individual Typst PDFs found"
           fi
@@ -132,13 +132,13 @@ jobs:
       - name: List final downloads directory
         run: |
           echo "=== Final downloads directory structure ==="
-          find _build/site/downloads -type f -ls 2>/dev/null || echo "Downloads directory is empty or not found"
+          find _build/html/downloads -type f -ls 2>/dev/null || echo "Downloads directory is empty or not found"
 
       # Deploy to GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './_build/site'
+          path: './_build/html'
       
       - name: Deploy to GitHub Pages
         id: deployment
