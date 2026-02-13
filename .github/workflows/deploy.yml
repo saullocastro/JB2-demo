@@ -58,13 +58,7 @@ jobs:
 
       # Build 1: Generate Presentations (Typst and Beamer PDFs)
       - name: Build Presentations with Make
-        run: |
-          # Filter content for Beamer format
-          python3 filter_content.py beamer content/Introduction.md content/Introduction.md.tmp
-          mv content/Introduction.md.tmp content/Introduction.md
-          make all
-          # Restore original from git
-          git checkout content/Introduction.md
+        run: make all
 
       - name: Upload Presentation Artifacts
         uses: actions/upload-artifact@v4
@@ -75,7 +69,7 @@ jobs:
       # Build 2: Generate Report PDFs (MyST outputs)
       - name: Build Report PDFs
         run: |
-          # Filter content for PDF/Typst formats
+          # Filter content for PDF format (only web-only content is removed)
           python3 filter_content.py pdf content/Introduction.md content/Introduction.md.tmp
           mv content/Introduction.md.tmp content/Introduction.md
           myst build --pdf --typst
