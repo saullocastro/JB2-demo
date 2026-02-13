@@ -2,3 +2,6 @@
 .beamer-only {
   display: none;
 }
+
+/* For HTML/website, hide PDF and Beamer only content via CSS */
+/* Web-only content is visible by default */

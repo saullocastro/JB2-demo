@@ -19,19 +19,20 @@ Some background information about Jupyter Book and its features, like exporting 
 Some figure
 :::
 
-+++ {"no-pdf": true}
+::::{web-only}
 :::{figure} ../figures/delft.*
 :label: fig-delft
 :alt: picture of the TUD
 
 A figure that is in the website but not in the PDF version.
 :::
-+++
+::::
 
 This text should appear in all formats.
 
 ![This picture should appear in all formats](../figures/tudelft.png)
 
+::::{beamer-only}
 ```{raw:latex}
 \begin{figure}
 \centering
@@ -39,23 +40,25 @@ This text should appear in all formats.
 \caption{This picture should appear only in beamer}
 \end{figure}
 ```
+::::
 
 This is a text that should appear in all the website, PDF and beamer presentation.
 
-+++ {"no-pdf": true}
+::::{web-only}
 This is a block of text that should appear only on the website.
-+++
+::::
 
-```{raw:latex}
+::::{beamer-only}
 This is a block of text that should appear only in the beamer presentation.
-```
+::::
 
-+++ {"no-html": true}
+::::{pdf-only}
 This is a block of text that should appear only in the PDF.
-+++
+::::
 
 ![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/diagram.png)
 
+::::{beamer-only}
 ```{raw:latex}
 \begin{figure}
 \centering
@@ -63,5 +66,6 @@ This is a block of text that should appear only in the PDF.
 \caption{This is a picture that would appear only in the beamer presentation.}
 \end{figure}
 ```
+::::
 
 ![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/tudelft.png)
