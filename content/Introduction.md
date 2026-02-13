@@ -19,7 +19,7 @@ Some background information about Jupyter Book and its features, like exporting 
 Some figure
 :::
 
-::::{.web-only}
+::::{web-only}
 :::{figure} ../figures/delft.*
 :label: fig-delft
 :alt: picture of the TUD
@@ -32,7 +32,7 @@ This text should appear in all formats.
 
 ![This picture should appear in all formats](../figures/tudelft.png)
 
-::::{.beamer-only}
+::::{beamer-only}
 ```{raw:latex}
 \begin{figure}
 \centering
