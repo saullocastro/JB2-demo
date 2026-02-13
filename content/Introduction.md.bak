@@ -32,40 +32,12 @@ This text should appear in all formats.
 
 ![This picture should appear in all formats](../figures/tudelft.png)
 
-::::{.beamer-only}
-```{raw:latex}
-\begin{figure}
-\centering
-\only<1>{\includegraphics[width=0.5\textwidth]{figures/tudelft-dark.png}}
-\caption{This picture should appear only in beamer}
-\end{figure}
-```
-::::
-
 This is a text that should appear in all the website, PDF and beamer presentation.
 
-::::{web-only}
+::::{.web-only}
 This is a block of text that should appear only on the website.
 ::::
 
-::::{beamer-only}
-This is a block of text that should appear only in the beamer presentation.
-::::
-
-::::{pdf-only}
-This is a block of text that should appear only in the PDF.
-::::
-
 ![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/diagram.png)
-
-::::{beamer-only}
-```{raw:latex}
-\begin{figure}
-\centering
-\only<1>{\includegraphics[width=0.5\textwidth]{figures/delft.png}}
-\caption{This is a picture that would appear only in the beamer presentation.}
-\end{figure}
-```
-::::
 
 ![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/tudelft.png)

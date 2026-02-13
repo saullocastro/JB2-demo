@@ -1,7 +1,2 @@
-.pdf-only,
-.beamer-only {
-  display: none;
-}
-
-/* For HTML/website, hide PDF and Beamer only content via CSS */
-/* Web-only content is visible by default */
+/* Format-specific content is filtered during build process using filter_content.py
+   All remaining content containers should be visible by default */
