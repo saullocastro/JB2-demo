@@ -50,7 +50,7 @@ This is a block of text that should appear only on the website.
 This is a block of text that should appear only in the beamer presentation.
 ```
 
-+++ {"no-tex": true, "no-typst": true}
++++ {"no-html": true}
 This is a block of text that should appear only in the PDF.
 +++
 
