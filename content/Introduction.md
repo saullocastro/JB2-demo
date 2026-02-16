@@ -12,7 +12,7 @@ Jupyter Book has been rebuild from ground up using the MyST engine [@Jupyter2025
 ## Background
 Some background information about Jupyter Book and its features, like exporting to multiple formats as indicated in {numref}`fig-diagram`.
 
-:::{figure} ../figures/diagram.*
+:::{figure} ../figures/diagram.png
 :label: fig-diagram
 :alt: Some figure
 
@@ -20,6 +20,7 @@ Some figure
 :::
 
 ::::{.web-only}
+## Web-only content
 :::{figure} ../figures/delft.*
 :label: fig-delft
 :alt: picture of the TUD
@@ -28,13 +29,15 @@ A figure that is in the website but none of the PDFs.
 :::
 ::::
 
+## Content that should appear everywhere
+
 This text should appear in all formats.
 
 ![This picture should appear in all formats](../figures/tudelft.png)
 
+::::{.beamer-only}
 ## Beamer-specific Content
 
-::::{.beamer-only}
 ```{=latex}
 \begin{figure}
 \centering
@@ -44,25 +47,24 @@ This text should appear in all formats.
 ```
 ::::
 
-This is a text that should appear in all the website, PDF and beamer presentation.
+A paragraph that should appear in all the website, PDF and beamer presentation.
 
 ::::{.web-only}
-This is a block of text that should appear only on the website.
+Another paragraph that should appear only on the website.
 ::::
 
 ::::{.beamer-only}
-This is a block of text that should appear only in the beamer presentation.
+Another paragraph that should appear only in the beamer presentation.
 ::::
 
 ::::{.pdf-only}
-This is a block of text that should appear only in the PDF.
+Another paragraph that should appear only in the PDF.
 ::::
 
 ![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/diagram.png)
 
-## Final Beamer Elements
-
 ::::{.beamer-only}
+## Final Beamer Elements
 ```{=latex}
 \begin{figure}
 \centering
@@ -72,4 +74,8 @@ This is a block of text that should appear only in the PDF.
 ```
 ::::
 
+::::{.pdf-only}
+Another paragraph that should appear only in the PDF.
+![This is a picture that should appear only in the PDF.](../figures/delft.png)
+::::
 
