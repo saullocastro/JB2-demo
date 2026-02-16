@@ -14,6 +14,11 @@ project:
       id: report_typst
       pandoc_args:
         - --lua-filter=pandoc-filter.lua
+    
+    - format: beamer
+      template: beamer-template
+      output: exports/combined_beamer_presentation.pdf
+      id: combined_beamer_presentation
 
 
   downloads:
