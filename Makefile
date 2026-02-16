@@ -99,9 +99,8 @@ $(OUTPUT_DIR)/%_typst.pdf: $(OUTPUT_DIR)/%.typ
 $(OUTPUT_DIR)/%.typ: $(CONTENT_DIR)/%.md
 	@echo " PANDOC: $< -> $@"
 	@mkdir -p $(@D)
-	@cp reference.bib $(OUTPUT_DIR)/
 	@python3 filter_content.py typst $< /tmp/$*.md.filtered && \
-	$(PANDOC) -M mainfont="Liberation Serif" -M monofont="Liberation Mono" --lua-filter=pandoc-filter.lua --bibliography=reference.bib /tmp/$*.md.filtered -t typst -s -o $@
+	$(PANDOC) -M mainfont="Liberation Serif" -M monofont="Liberation Mono" --lua-filter=pandoc-filter.lua /tmp/$*.md.filtered -t typst -s -o $@
 
 
 # ==============================================================================

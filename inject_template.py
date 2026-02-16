@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""
+r"""
 Inject input commands into LaTeX template.
 
 Usage: inject_template.py <template_file> <output_file> <fragment1> [fragment2] ...
@@ -9,7 +9,7 @@ import sys
 import os
 
 def inject_fragments(template_file, output_file, fragments):
-    """Inject \input{} commands into template at placeholder."""
+    r"""Inject \input{} commands into template at placeholder."""
     
     # Read template
     with open(template_file, 'r') as f:
