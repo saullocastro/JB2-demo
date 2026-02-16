@@ -63,33 +63,27 @@ $(BEAMER_PDF): $(BEAMER_FRAGMENTS) $(TEMPLATE_DIR)/presentation.tex
 	@cp -r $(TEMPLATE_DIR)/* $(BEAMER_BUILD_DIR)/
 	@# 2. Inject the \input commands into the copied template
 	@echo "  -> Injecting content into template..."
-	@INPUT_COMMANDS_FILE=$$(mktemp); \
-	for frag in $(BEAMER_FRAGMENTS); do \
-		echo "\\input{$$(basename $$frag)}" >> $$INPUT_COMMANDS_FILE; \
-	done; \
-	COPIED_TEMPLATE_FILE=$(BEAMER_BUILD_DIR)/presentation.tex; \
-	PLACEHOLDER_TEXT="% --- CONTENT WILL BE INJECTED HERE ---"; \
-	TEMP_TEMPLATE_FILE=$$(mktemp); \
-	awk -v r=$$INPUT_COMMANDS_FILE '1; /'"$$PLACEHOLDER_TEXT"'"/ { while( (getline line < r) > 0 ) print line; }' "$$COPIED_TEMPLATE_FILE" > $$TEMP_TEMPLATE_FILE && mv $$TEMP_TEMPLATE_FILE $$COPIED_TEMPLATE_FILE; \
-	rm $$INPUT_COMMANDS_FILE;
+	@python3 inject_template.py $(BEAMER_BUILD_DIR)/presentation.tex $(BEAMER_BUILD_DIR)/presentation.tex $(BEAMER_FRAGMENTS)
 	@# 3. Compile the final PDF from within the build directory
 	@echo "  -> Compiling final PDF (this may take a moment)..."
 	@( cd $(BEAMER_BUILD_DIR) && \
-	   $(PDFLATEX) -interaction=nonstopmode "presentation.tex" > /dev/null && \
-	   $(PDFLATEX) -interaction=nonstopmode "presentation.tex" > /dev/null ) \
-	   || (echo "    - ERROR: pdflatex compilation failed. See logs in $(BEAMER_BUILD_DIR)." && exit 1)
+	   $(PDFLATEX) -interaction=batchmode "presentation.tex" > /dev/null 2>&1 ; \
+	   $(PDFLATEX) -interaction=batchmode "presentation.tex" > /dev/null 2>&1 ; \
+	   [ -f presentation.pdf ] ) \
+	   || (echo "    - ERROR: pdflatex compilation failed or no PDF produced." && exit 1)
 	@# 4. Move final PDF and cleanup
 	@echo "  -> Finalizing PDF..."
 	@mv $(BEAMER_BUILD_DIR)/presentation.pdf $@
 	@rm -rf $(BEAMER_BUILD_DIR)
 	@echo "--- Beamer Presentation Complete: $@"
 
-# Pattern rule to create a .tex fragment for Beamer from a .md file.
+# Pattern rule to create a .tex file for Beamer from a .md file.
 # This will run for each fragment that is older than its source markdown file.
 $(BEAMER_BUILD_DIR)/%.tex: $(CONTENT_DIR)/%.md
 	@echo " PANDOC: $< -> $@"
 	@mkdir -p $(@D)
-	@$(PANDOC) --lua-filter=pandoc-filter.lua $< -t beamer -o $@
+	@python3 filter_content.py beamer $< /tmp/$*.md.filtered && \
+	$(PANDOC) --lua-filter=pandoc-filter.lua /tmp/$*.md.filtered -t beamer -o $@
 
 
 # ==============================================================================
@@ -106,7 +100,8 @@ $(OUTPUT_DIR)/%.typ: $(CONTENT_DIR)/%.md
 	@echo " PANDOC: $< -> $@"
 	@mkdir -p $(@D)
 	@cp reference.bib $(OUTPUT_DIR)/
-	@$(PANDOC) --lua-filter=pandoc-filter.lua --bibliography=reference.bib $< -t typst -s -o $@
+	@python3 filter_content.py typst $< /tmp/$*.md.filtered && \
+	$(PANDOC) -M mainfont="Liberation Serif" -M monofont="Liberation Mono" --lua-filter=pandoc-filter.lua --bibliography=reference.bib /tmp/$*.md.filtered -t typst -s -o $@
 
 
 # ==============================================================================
