@@ -15,7 +15,7 @@ project:
       pandoc_args:
         - --lua-filter=pandoc-filter.lua
     
-    - format: beamer
+    - format: pdf
       template: beamer-template
       output: exports/combined_beamer_presentation.pdf
       id: combined_beamer_presentation
