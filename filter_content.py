@@ -21,10 +21,10 @@ def filter_content(content: str, format_target: str) -> str:
     # For PDF: keep pdf-only, remove web-only and beamer-only
     # For Beamer: keep beamer-only, remove web-only and pdf-only
     remove_entirely = {
-        'html': [r'::::{pdf-only}.*?::::', r'::::{beamer-only}.*?::::'],
-        'pdf': [r'::::{web-only}.*?::::', r'::::{beamer-only}.*?::::'],
-        'typst': [r'::::{web-only}.*?::::', r'::::{beamer-only}.*?::::'],
-        'beamer': [r'::::{web-only}.*?::::', r'::::{pdf-only}.*?::::'],
+        'html': [r'::::{\.pdf-only}.*?::::', r'::::{\.beamer-only}.*?::::'],
+        'pdf': [r'::::{\.web-only}.*?::::', r'::::{\.beamer-only}.*?::::'],
+        'typst': [r'::::{\.web-only}.*?::::', r'::::{\.beamer-only}.*?::::'],
+        'beamer': [r'::::{\.web-only}.*?::::', r'::::{\.pdf-only}.*?::::'],
     }
     
     # Define which containers to unwrap (keep content, remove container markers)
