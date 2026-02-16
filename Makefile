@@ -76,6 +76,8 @@ $(BEAMER_PDF): $(BEAMER_FRAGMENTS) $(TEMPLATE_DIR)/presentation.tex
 	@echo "  -> Finalizing PDF..."
 	@mv $(BEAMER_BUILD_DIR)/presentation.pdf $@
 	@rm -rf $(BEAMER_BUILD_DIR)
+	@mkdir -p exports
+	@cp $@ exports/combined_beamer_presentation.pdf
 	@echo "--- Beamer Presentation Complete: $@"
 
 # Pattern rule to create a .tex file for Beamer from a .md file.

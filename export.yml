@@ -21,3 +21,5 @@ project:
       title: PDF (LaTeX)
     - id: report_typst
       title: PDF (Typst)
+    - id: combined_beamer_presentation
+      title: Beamer Presentation PDF
