@@ -16,6 +16,58 @@ def filter_content(content: str, format_target: str) -> str:
     For blocks that are included, remove only the container markers and keep the content.
     """
     
+    result = content
+    
+    # Convert MyST-specific syntax to Pandoc-compatible syntax
+    # Convert {numref}`label` to [label] for simple references
+    result = re.sub(r'\{numref\}`([^`]+)`', r'[\1]', result)
+    
+    # Convert MyST figure containers to Pandoc image syntax
+    # Handle :::{figure} path ... ::: syntax
+    # Extract the figure path and caption, convert to markdown image syntax
+    def convert_myst_figure(match):
+        figure_block = match.group(0)
+        # Extract figure path from the opening line
+        # :::{figure} ../figures/diagram.*
+        path_match = re.search(r':::\{figure\}\s+([^\n]+)', figure_block)
+        if path_match:
+            path = path_match.group(1).strip()
+        else:
+            return ''  # No path found, remove the block
+        
+        # Extract caption/content (lines between opening and closing markers)
+        # that don't start with ':'
+        lines = figure_block.split('\n')
+        caption_lines = []
+        for line in lines[1:]:  # Skip the opening :::{figure} line
+            if line.strip().startswith(':'):
+                continue  # Skip attribute lines
+            if line.strip() == ':::':
+                break  # Stop at closing marker
+            if line.strip():  # Keep non-empty content lines
+                caption_lines.append(line)
+        
+        caption = ' '.join(caption_lines)
+        # Convert to markdown image syntax: ![caption](path)
+        return f'![{caption}]({path})'
+    
+    # Match :::{figure} ... ::: blocks
+    result = re.sub(
+        r':::\{figure\}[^\n]*\n(?::[^\n]*\n)*(?:^[^\n]*\n)*?^:::\s*$',
+        convert_myst_figure,
+        result,
+        flags=re.MULTILINE | re.DOTALL
+    )
+    
+    # Resolve wildcard patterns in image/figure paths for formats that don't support them
+    # Replace .* with .png (most common format) - do this AFTER figure conversion
+    result = re.sub(r'\.\*', '.png', result)
+    
+    # For beamer format, adjust figure paths since they'll be relative to presentations/beamer_build/
+    # Change ../figures/ to figures/
+    if format_target == 'beamer':
+        result = re.sub(r'\.\./figures/', 'figures/', result)
+    
     # Define which containers to remove entirely for each format
     # For HTML (website): keep web-only, remove pdf-only and beamer-only
     # For PDF: keep pdf-only, remove web-only and beamer-only
@@ -35,7 +87,12 @@ def filter_content(content: str, format_target: str) -> str:
         'beamer': [r'::::{web-only}', r'::::{pdf-only}', r'::::{beamer-only}'],
     }
     
-    result = content
+    # Remove citations for typst format (typst doesn't support pandoc citations)
+    if format_target == 'typst':
+        # Match [@citationkey], {[@citationkey]}, or bare @citationkey
+        result = re.sub(r'\[@[\w\-]+\]', '', result)  # [@key]
+        result = re.sub(r'\{@[\w\-]+\}', '', result)  # {@key}
+        result = re.sub(r'(?<!\[)@[\w\-]+(?!\])', '', result)  # bare @key (avoiding ][)
     
     # Remove entire blocks that shouldn't appear in this format
     for pattern in remove_entirely.get(format_target, []):

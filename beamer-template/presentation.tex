@@ -12,8 +12,11 @@
 \date{\today}
 
 % --- Add any additional LaTeX packages you need ---
-% \usepackage{graphicx}
-% \usepackage{amsmath}
+\usepackage{graphicx}
+
+% Define pandocbounded for Pandoc-generated image handling
+% Just render the image normally without additional constraints
+\newcommand{\pandocbounded}[1]{#1}
 
 \begin{document}
 

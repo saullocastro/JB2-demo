@@ -24,7 +24,7 @@ Some figure
 :label: fig-delft
 :alt: picture of the TUD
 
-A figure that is in the website but not in the PDF version.
+A figure that is in the website but none of the PDFs.
 :::
 ::::
 
@@ -32,8 +32,10 @@ This text should appear in all formats.
 
 ![This picture should appear in all formats](../figures/tudelft.png)
 
+## Beamer-specific Content
+
 ::::{.beamer-only}
-```{raw:latex}
+```{=latex}
 \begin{figure}
 \centering
 \only<1>{\includegraphics[width=0.5\textwidth]{figures/tudelft-dark.png}}
@@ -58,8 +60,10 @@ This is a block of text that should appear only in the PDF.
 
 ![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/diagram.png)
 
+## Final Beamer Elements
+
 ::::{.beamer-only}
-```{raw:latex}
+```{=latex}
 \begin{figure}
 \centering
 \only<1>{\includegraphics[width=0.5\textwidth]{figures/delft.png}}
@@ -68,4 +72,4 @@ This is a block of text that should appear only in the PDF.
 ```
 ::::
 
-![This is a picture that should appear in all the website, PDF and beamer presentation.](../figures/tudelft.png)
+

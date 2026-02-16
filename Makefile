@@ -61,6 +61,7 @@ $(BEAMER_PDF): $(BEAMER_FRAGMENTS) $(TEMPLATE_DIR)/presentation.tex
 	@# 1. Prepare build directory and copy template assets
 	@echo "  -> Preparing build directory..."
 	@cp -r $(TEMPLATE_DIR)/* $(BEAMER_BUILD_DIR)/
+	@cp -r figures $(BEAMER_BUILD_DIR)/
 	@# 2. Inject the \input commands into the copied template
 	@echo "  -> Injecting content into template..."
 	@python3 inject_template.py $(BEAMER_BUILD_DIR)/presentation.tex $(BEAMER_BUILD_DIR)/presentation.tex $(BEAMER_FRAGMENTS)
@@ -83,7 +84,7 @@ $(BEAMER_BUILD_DIR)/%.tex: $(CONTENT_DIR)/%.md
 	@echo " PANDOC: $< -> $@"
 	@mkdir -p $(@D)
 	@python3 filter_content.py beamer $< /tmp/$*.md.filtered && \
-	$(PANDOC) --lua-filter=pandoc-filter.lua /tmp/$*.md.filtered -t beamer -o $@
+	$(PANDOC) --lua-filter=pandoc-filter.lua --slide-level=2 /tmp/$*.md.filtered -t beamer -o $@
 
 
 # ==============================================================================
